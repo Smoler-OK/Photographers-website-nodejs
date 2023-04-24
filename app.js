@@ -11,7 +11,7 @@ let currentPath = path.resolve();
 http.createServer( (req, res) => {
     let numAlbum = req.url.split('/')[2];
     let cookie = req.headers['cookie'];
-    let token = getTokenFromCookies(cookie);
+    let token = cookie === undefined ? '' : getTokenFromCookies(cookie);
 
     if(req.url === '/auth') {
         let data = '';
