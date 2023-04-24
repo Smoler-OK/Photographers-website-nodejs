@@ -1,0 +1,5 @@
+User-agent: Yandex
+sitemap: http://alexandra-andriutsa.ru/
+sitemap: http://alexandra-andriutsa.ru/about
+sitemap: http://alexandra-andriutsa.ru/contacts
+sitemap: http://alexandra-andriutsa.ru/authentication

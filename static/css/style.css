@@ -1,0 +1,302 @@
+body {
+    margin: 15px;
+    background-color: #000;
+}
+
+hr {
+    border: 1px solid black;
+}
+
+.designBorder {
+    background-color: #fff;
+    padding: 50px 22%;
+}
+
+.logo {
+    font-family: 'Dancing Script', cursive;
+    font-size: 50px;
+}
+
+.logo-href {
+    color: black;
+}
+
+#submit{
+    padding: 2%;
+}
+
+header p {
+    text-align: center;
+    margin: 5px;
+}
+
+.menu {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.menu ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+.menu ul li a {
+    color: #000;
+}
+
+.menu ul>li :hover {
+    text-decoration-line: underline;
+}
+
+.work {
+    display: inline-block;
+    margin: 30px 10px;
+    border-radius: 10px;
+}
+
+.cover :hover {
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.title :hover {
+    text-decoration-line: underline;
+}
+
+.title > div{
+    text-align: center;
+    margin: 10px 0;
+    border-radius: 10px;
+    color: black;
+}
+
+.work {
+    width: 250px;
+    height: 150px;
+}
+
+.album_list img{
+    width: 400px;
+    display: block;
+    margin: 5% auto;
+}
+
+.title_album input {
+    border: 1px solid black;
+    margin-top: 10px;
+}
+
+.title_album, .img_cover, .img_album{
+    margin: 30px;
+}
+
+#add_cover_btn, #add_album_btn {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+#login, #password {
+    border: 1px solid black;
+}
+
+.delete {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 3%;
+}
+
+.deleteDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.authentication {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login, .password, .submit{
+    /*margin: 1% 38%;*/
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+.login p, .password p {
+    margin: 1% 0;
+}
+
+.submit button, .submit_add_adlbum button{
+    color: white;
+    background-color: black;
+    padding: 5px 85px;
+    border-radius: 10px;
+}
+
+.submit_add_adlbum {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.title_album p, .img_album p, .img_cover p {
+    margin-bottom: 40px;
+    font-size: 25px;
+} 
+
+.title_album, .img_album, .img_cover {
+    text-align: center;;
+} 
+
+#titleAlbum {
+    padding: 1%;
+    width: 50%;
+    margin: 0;
+}
+
+.titleAbout {
+    font-size: 30px;
+    text-align: center;
+    margin: 3% 0;
+}
+
+.borderAbout {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 7%;
+}
+
+.descriptionAbout p{
+    text-align: justify;
+    margin: 3%;
+}
+
+.contacts div{
+    width: 15%;
+}
+
+.contacts p{
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.contacts a>p{
+    color: black;
+}
+
+.contacts a :hover{
+    text-decoration: underline;
+}
+
+.contacts {
+    display: flex;
+    justify-content: space-between;
+    margin: 10%;
+}
+
+footer {
+    padding: 5% 10%;
+    color: #fff;
+}
+
+.footerSection {
+    display: flex;
+    justify-content: space-around;
+}
+
+.footerSection li :hover {
+    text-decoration-line: underline;
+}
+
+.footerSection li {
+    margin-top: 10px;
+}
+
+.footerSection a {
+    text-decoration: none;
+    color: white;
+}
+
+.fr, .fl {
+    max-width: 30%;
+}
+
+@media screen and (max-width: 1450px) {
+
+    .content{
+        margin: 0 auto;
+        text-align: center;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+
+    .borderAbout p, .titleAbout {
+        margin: 10% 3%;
+    }
+
+    .designBorder {
+        padding: 50px 10%;
+    }
+
+}
+
+@media screen and (max-width: 620px) {
+
+    html, body {
+        overflow-x: hidden;
+    }
+
+    .menu ul li {
+        display: flex;
+        justify-content: space-around;
+        margin: 15px auto;
+    }
+
+    .menu {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    .work {
+        max-width: 100%;
+        /*margin: 0;*/
+    }
+
+    .footerSection {
+        display: block;
+        text-align: center;
+    }
+
+    .fr {
+        margin: 0 auto;
+        border-top: 1px solid white;
+        padding-top: 5%;
+    }
+
+    .fl {
+        margin: 5% auto;
+    }
+
+    .borderAbout {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .borderAbout p, .titleAbout {
+        margin: 10% 3%;
+    }
+
+    .contacts p{
+        font-size: 12px;
+        text-align: center;
+    }
+
+    input, #submit {
+        width: 70%;
+    }
+
+    .fr, .fl {
+        max-width: 100%;
+    }
+}
