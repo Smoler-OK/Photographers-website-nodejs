@@ -27,7 +27,7 @@ http.createServer( (req, res) => {
                 setCookie(createUUID);
                 res.writeHead(200, {
                     'Content-Type': 'text/plain',
-                    'Set-Cookie': 'token=' + createUUID + '; max-age = 15000',
+                    'Set-Cookie': 'token=' + createUUID + '; max-age = 99999',
                 })
                 res.write('Accept!');
                 res.end();
@@ -59,7 +59,7 @@ http.createServer( (req, res) => {
         } else if(req.url === '/add_album') {
             getContentPage('html_content_load/add_album.html', 'text/html', res);
         } else if(req.url.split('/')[2] === 'album_length') {
-            let result = fs.readdirSync('static/img_albums/' + req.url.split('/')[3]).length;
+            let result = fs.readdirSync('static/img_albums/' + req.url.split('/')[3]);
             res.end(result.toString());
         } else if(req.url === '/authentication') {
             getContentPage('html_content_load/authentication.html', 'text/html', res);
@@ -88,6 +88,7 @@ http.createServer( (req, res) => {
             res.end('album add');
 
         } else if(req.url === '/deleteAlbum') {
+
             let data = '';
             req.on('data', (chunk) => {
                 data += chunk;
@@ -100,7 +101,22 @@ http.createServer( (req, res) => {
                deleteCover(data);
                deleteAlbum(data);
             });
-            res.end('album delete')
+            res.end('album delete');
+
+        } else if(req.url === '/deleteAlbumImg') {
+
+            let data = '';
+            req.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            req.on('end', (err) => {
+                if(err) console.log(err);
+
+                deleteAlbumImg(data);
+            });
+            res.end('album delete');
+
         }
     }
 
@@ -119,6 +135,15 @@ function getTokenFromCookies(cookies) {
     }
 
     return jsonCookies['token'];
+}
+
+function deleteAlbumImg(imgName) {
+
+    let parseImg = imgName.split('_');
+    let albumNum = parseImg[0];
+
+    fs.unlinkSync(currentPath + '/static/img_albums/' + albumNum + '/' + imgName);
+
 }
 
 function deleteTitle(num) {
@@ -239,6 +264,8 @@ function getContentType(url) {
             return 'application/json';
         case  '.ico':
             return 'image/x-icon';
+        case '.svg':
+            return 'image/svg+xml';
         default:
             return 'application/octate-stream';
     
@@ -248,10 +275,23 @@ function getContentType(url) {
 
 function getContentPage(file, contentType, res) {
 
-    let fileInput = fs.readFileSync(currentPath + '/static/' + file, (err) => {
-        if(err) console.log(err);
-    });
+    // fs.readFileSync(currentPath + '/static/' + file, (err, data) => {
+    //         if(err) {
+    //             console.log(err);
+    //             res.writeHead(404, {'Content-Type' : contentType});
+    //         } else {
+    //             res.writeHead(200, {'Content-Type' : contentType});
+    //             res.end(data);
+    //         }
+    //     });
+    try {
+        let fileInput = fs.readFileSync(currentPath + '/static/' + file);
         res.writeHead(200, {'Content-Type' : contentType});
         res.end(fileInput);
+    } catch (err) {
+        res.writeHead(404, {'Content-Type' : contentType});
+        res.end();
+    }
+
 
 }

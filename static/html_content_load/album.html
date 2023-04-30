@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-
+    <link href="/lightbox/lightbox.min.css" rel="stylesheet">
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -55,7 +55,22 @@
         </ul>
     </section>
 
-    <section class="content"></section>
+    <section class="content">
+
+        <div class="gallery">
+            <div class="gallery-item">
+                <a href="/img_albums/1/1_1.jpg" data-lightbox="gallery" data-image-alt="Image 1">
+                    <img src="/img_albums/1/1_1.jpg" alt="Thumbnail 1">
+                </a>
+            </div>
+            <div class="gallery-item">
+                <a href="/img_albums/1/1_2.jpg" data-lightbox="gallery" data-image-alt="Image 2">
+                    <img src="/img_albums/1/1_2.jpg" alt="Thumbnail 2">
+                </a>
+            </div>
+        </div>
+
+    </section>
 
 </div>
 
@@ -75,6 +90,7 @@
     </div>
 </footer>
 
+<script src="/lightbox/lightbox.min.js"></script>
 <script src="/js/album.js"></script>
 <script src="../js/quote.js"></script><script src="../js/checkCookie.js"></script>
 </body>
