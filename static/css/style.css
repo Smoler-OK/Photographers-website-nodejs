@@ -102,6 +102,7 @@ header p {
     border: 1px solid black;
     border-radius: 10px;
     padding: 3%;
+    color: black;
 }
 
 .delete:hover{

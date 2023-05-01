@@ -275,15 +275,6 @@ function getContentType(url) {
 
 function getContentPage(file, contentType, res) {
 
-    // fs.readFileSync(currentPath + '/static/' + file, (err, data) => {
-    //         if(err) {
-    //             console.log(err);
-    //             res.writeHead(404, {'Content-Type' : contentType});
-    //         } else {
-    //             res.writeHead(200, {'Content-Type' : contentType});
-    //             res.end(data);
-    //         }
-    //     });
     try {
         let fileInput = fs.readFileSync(currentPath + '/static/' + file);
         res.writeHead(200, {'Content-Type' : contentType});
@@ -292,6 +283,5 @@ function getContentPage(file, contentType, res) {
         res.writeHead(404, {'Content-Type' : contentType});
         res.end();
     }
-
 
 }

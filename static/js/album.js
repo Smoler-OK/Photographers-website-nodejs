@@ -5,24 +5,79 @@ fetch('album_length/' + getAlbumNum)
     .then((res) => res.text())
     .then((result) => {
 
-        for(let imageName of arrImg) {
-
             let arrImg = result.split(',');
 
-            let galleryDiv = document.createElement('div');
-            galleryDiv.classList('gallery');
+            let lb = document.querySelector('.lb');
+            content.appendChild(lb);
 
-            let galleryItemDiv = document.createElement('div');
-            galleryItemDiv.classList('gallery-item');
+            for(let imageName of arrImg) {
 
-            let aImg = document.createElement('a');
-            aImg.href = 'img_albums/' + getAlbumNum + '/' + imageName;
-            aImg.
-                //Найти, как добавить свой атрибут в тег
+                    let a = document.createElement('a');
+                    a.href = '/img_albums/' + getAlbumNum + '/' + imageName;
+                    a.classList = 'album_list';
 
-            let img = document.createElement('img');
+                    let img = document.createElement('img');
+                    img.src = '/img_albums/' + getAlbumNum + '/' + imageName;
 
-        }
+                    a.appendChild(img);
+                    lb.appendChild(a);
+
+                    fetch('/checkCookies', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'text/plant'
+                                    },
+                                    body: cookie
+                                })
+                                    .then((response) => response.text())
+                                    .then((result) => {
+
+                                        if(imageName === '') {
+                                            fetch('/deleteAlbum', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'text/plain'
+                                                },
+                                                body: getAlbumNum
+                                            })
+                                                .then((res) => res.text())
+                                                .then((result) => {
+                                                    console.log(result);
+                                                    window.location = '/';
+                                                });
+                                        }
+
+                                        if (result === 'ok') {
+
+                                            let deleteDiv = document.createElement('div');
+                                            let deleteBtn = document.createElement('button');
+                                            deleteDiv.appendChild(deleteBtn);
+                                            deleteBtn.innerHTML = 'Удалить фото ';
+                                            deleteBtn.value = imageName;
+                                            deleteDiv.classList = 'deleteDiv';
+                                            deleteBtn.classList = 'delete';
+                                            deleteBtn.onclick = function () {
+                                                fetch('/deleteAlbumImg', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'text/plain'
+                                                    },
+                                                    body: imageName
+                                                })
+                                                    .then((res) => res.text())
+                                                    .then((result) => {
+                                                        console.log(result);
+                                                        location.reload();
+                                                    });
+                                            }
+                                            a.appendChild(deleteDiv);
+                                        } else {
+
+                                        }
+                                    })
+                                    .catch((err) => console.log(err));
+            }
+
 
         // for(let imageName of arrImg) {
         //
