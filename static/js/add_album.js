@@ -56,9 +56,7 @@ submit.addEventListener('click', function () {
 
         method : 'POST',
         headers : {
-
             'Content-Type' : 'text/plain',
-
         },
         body : JSON.stringify(result),
 

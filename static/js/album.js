@@ -7,7 +7,53 @@ fetch('album_length/' + getAlbumNum)
 
             let arrImg = result.split(',');
 
+            let inputFile = document.createElement('input');
+            inputFile.type = 'file';
+            inputFile.multiple = 'multiple';
+            inputFile.hidden = 'true';
+            inputFile.classList = 'inputFileAlbum';
+            inputFile.onchange = function () {
+
+                let getInputFile = inputFile.files;
+
+                for (let i = 0; i < getInputFile.length; i++) {
+
+                    let reader = new FileReader();
+                    reader.onload = function () {
+
+                        let resultAlbum = {
+                            albumNum: getAlbumNum,
+                            image: reader.result.replace("data:", "").replace(/^.+,/, "")
+                        }
+
+                        fetch('/addImageAlbum', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'text/plain'
+                            },
+                            body: JSON.stringify(resultAlbum)
+                        })
+                            .then((response) => response.text())
+                            .then((result) => console.log(result))
+                            .catch((err) => console.log(err));
+
+                    }
+                    reader.readAsDataURL(getInputFile[i]);
+
+                }
+                window.location.reload();
+            };
+
+            let btnFile = document.createElement('button');
+            btnFile.classList = 'addPhotoAsAlbum';
+            btnFile.innerHTML = 'Добавить фото в альбом';
+            btnFile.onclick = function () {
+                inputFile.click();
+            };
+
             let lb = document.querySelector('.lb');
+            content.appendChild(inputFile);
+            content.appendChild(btnFile);
             content.appendChild(lb);
 
             for(let imageName of arrImg) {

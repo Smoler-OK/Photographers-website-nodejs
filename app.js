@@ -117,10 +117,49 @@ http.createServer( (req, res) => {
             });
             res.end('album delete');
 
+        } else if(req.url === '/addImageAlbum') {
+
+            let data = '';
+            req.on('data', (chunk) => {
+                data += chunk;
+            });
+
+            req.on('end', (err) => {
+                if(err) console.log(err);
+                let parseImageToJson = JSON.parse(data);
+                pushImageAlbum(parseImageToJson);
+            });
+            res.end('Image adding as album');
+
         }
     }
 
 }).listen(80, () => {console.log('start server');});
+
+function pushImageAlbum(image) {
+
+    let pathAlbums = currentPath + '/static/img_albums/' + image['albumNum'];
+
+    fs.readdir(pathAlbums, (err, files) => {
+        if(err) console.log(err);
+
+        let fileArr = files.reverse();
+        for(let file of fileArr) {
+
+            let imgNum = +file.split('_')[1].split('.')[0];
+            let oldPath = pathAlbums + '/' + file;
+            let newPath = pathAlbums + '/' + image['albumNum'] + '_' + (imgNum + 1) + '.jpg';
+
+            fs.renameSync(oldPath, newPath);
+        }
+
+        let buffer = new Buffer.from(image['image'], 'base64');
+
+        fs.writeFileSync(pathAlbums + '/1_1.jpg', buffer);
+
+    });
+
+}
 
 function getTokenFromCookies(cookies) {
 
