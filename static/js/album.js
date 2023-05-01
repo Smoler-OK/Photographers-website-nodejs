@@ -5,56 +5,74 @@ fetch('album_length/' + getAlbumNum)
     .then((res) => res.text())
     .then((result) => {
 
-            let arrImg = result.split(',');
+        let arrImg = result.split(',');
+        let lb = document.querySelector('.lb');
 
-            let inputFile = document.createElement('input');
-            inputFile.type = 'file';
-            inputFile.multiple = 'multiple';
-            inputFile.hidden = 'true';
-            inputFile.classList = 'inputFileAlbum';
-            inputFile.onchange = function () {
+        fetch('/checkCookies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plant'
+            },
+            body: cookie
+        })
+            .then((response) => response.text())
+            .then((result) => {
 
-                let getInputFile = inputFile.files;
+                if (result === 'ok') {
 
-                for (let i = 0; i < getInputFile.length; i++) {
+                    let inputFile = document.createElement('input');
+                    inputFile.type = 'file';
+                    inputFile.multiple = 'multiple';
+                    inputFile.hidden = 'true';
+                    inputFile.classList = 'inputFileAlbum';
+                    inputFile.onchange = function () {
 
-                    let reader = new FileReader();
-                    reader.onload = function () {
+                        let getInputFile = inputFile.files;
 
-                        let resultAlbum = {
-                            albumNum: getAlbumNum,
-                            image: reader.result.replace("data:", "").replace(/^.+,/, "")
+                        for (let i = 0; i < getInputFile.length; i++) {
+
+                            let reader = new FileReader();
+                            reader.onload = function () {
+
+                                let resultAlbum = {
+                                    albumNum: getAlbumNum,
+                                    image: reader.result.replace("data:", "").replace(/^.+,/, "")
+                                }
+
+                                fetch('/addImageAlbum', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'text/plain'
+                                    },
+                                    body: JSON.stringify(resultAlbum)
+                                })
+                                    .then((response) => response.text())
+                                    .then((result) => console.log(result))
+                                    .catch((err) => console.log(err));
+
+                            }
+                            reader.readAsDataURL(getInputFile[i]);
+
                         }
+                        window.location.reload();
+                    };
 
-                        fetch('/addImageAlbum', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'text/plain'
-                            },
-                            body: JSON.stringify(resultAlbum)
-                        })
-                            .then((response) => response.text())
-                            .then((result) => console.log(result))
-                            .catch((err) => console.log(err));
+                    let btnFile = document.createElement('button');
+                    btnFile.classList = 'addPhotoAsAlbum';
+                    btnFile.innerHTML = 'Добавить фото в альбом';
+                    btnFile.onclick = function () {
+                        inputFile.click();
+                    };
 
-                    }
-                    reader.readAsDataURL(getInputFile[i]);
+                    content.appendChild(inputFile);
+                    content.appendChild(btnFile);
+                    content.appendChild(lb);
+
+                } else {
 
                 }
-                window.location.reload();
-            };
-
-            let btnFile = document.createElement('button');
-            btnFile.classList = 'addPhotoAsAlbum';
-            btnFile.innerHTML = 'Добавить фото в альбом';
-            btnFile.onclick = function () {
-                inputFile.click();
-            };
-
-            let lb = document.querySelector('.lb');
-            content.appendChild(inputFile);
-            content.appendChild(btnFile);
-            content.appendChild(lb);
+            })
+            .catch((err) => console.log(err));
 
             for(let imageName of arrImg) {
 
@@ -123,74 +141,4 @@ fetch('album_length/' + getAlbumNum)
                                     })
                                     .catch((err) => console.log(err));
             }
-
-
-        // for(let imageName of arrImg) {
-        //
-        //         let img = document.createElement('img');
-        //         let div = document.createElement('div');
-        //         img.src = '/img_albums/' + getAlbumNum + '/' + imageName;
-        //
-        //         div.classList = 'album_list';
-        //         div.appendChild(img);
-        //         div.appendChild(img);
-        //
-        //         fetch('/checkCookies', {
-        //             method: 'POST',
-        //             headers: {
-        //                 'Content-Type': 'text/plant'
-        //             },
-        //             body: cookie
-        //         })
-        //             .then((response) => response.text())
-        //             .then((result) => {
-        //
-        //                 if(imageName === '') {
-        //                     fetch('/deleteAlbum', {
-        //                         method: 'POST',
-        //                         headers: {
-        //                             'Content-Type': 'text/plain'
-        //                         },
-        //                         body: getAlbumNum
-        //                     })
-        //                         .then((res) => res.text())
-        //                         .then((result) => {
-        //                             console.log(result);
-        //                             window.location = '/';
-        //                         });
-        //                 }
-        //
-        //                 if (result === 'ok') {
-        //
-        //                     let deleteDiv = document.createElement('div');
-        //                     let deleteBtn = document.createElement('button');
-        //                     deleteDiv.appendChild(deleteBtn);
-        //                     deleteBtn.innerHTML = 'Удалить фото ';
-        //                     deleteBtn.value = imageName;
-        //                     deleteDiv.classList = 'deleteDiv';
-        //                     deleteBtn.classList = 'delete';
-        //                     deleteBtn.onclick = function () {
-        //                         fetch('/deleteAlbumImg', {
-        //                             method: 'POST',
-        //                             headers: {
-        //                                 'Content-Type': 'text/plain'
-        //                             },
-        //                             body: imageName
-        //                         })
-        //                             .then((res) => res.text())
-        //                             .then((result) => {
-        //                                 console.log(result);
-        //                                 location.reload();
-        //                             });
-        //                     }
-        //                     div.appendChild(deleteDiv);
-        //                 } else {
-        //
-        //                 }
-        //             })
-        //             .catch((err) => console.log(err));
-        //
-        //         content.appendChild(div);
-        //
-        // }
 });
